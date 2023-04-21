@@ -1,0 +1,56 @@
+ <head>
+  <title>Quick Todos</title>
+  <style>
+    li.checked .text{
+      text-decoration: line-through;
+    }
+    li{
+      list-style: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    {{> main}}
+  </div>
+</body>
+
+<template name="main">
+  <header>
+    {{> loginButtons}}
+    <hr>
+    <h1 class="text-center">{{title}}</h1>
+    {{#if currentUser}}
+    <form class="add-task well">
+      <input class="form-control" type="text" name="text" placeholder="Add Task..."/>
+    </form>
+    {{/if}}
+  </header>
+<ul class="list-group">
+  {{#each tasks}}
+  <li>{{> task}}</li>
+  {{/each}}
+</ul>
+
+</template>
+
+<template name="task">
+  <li class ="list-group-item {{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
+  {{#if isOwner}}
+  <button class="delete btn btn-danger">&times;</button>
+  <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
+  {{/if}}
+    <span class="text"><strong>{{username}}</strong>:  {{text}}</span>
+    {{#if isOwner}}
+  <button class="toggle-private btn btn-default">
+    {{#if private}}
+      Private
+    {{else}}
+      Public
+    {{/if}}
+  </button>
+  {{/if}}
+</li>
+</template>
+
